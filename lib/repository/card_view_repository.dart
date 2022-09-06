@@ -1,7 +1,9 @@
 class CardViewRepository {
   bool cardView = false;
 
-  set changeCardView(bool cardView) {
-    cardView = (cardView) ? false : true;
+  void changeView() {
+    cardView = !cardView;
   }
+
+  get isCardView => cardView;
 }
