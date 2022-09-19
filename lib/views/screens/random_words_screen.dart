@@ -58,7 +58,7 @@ class _RandomWordsState extends State<RandomWords> {
       MaterialPageRoute<void>(
         builder: (context) {
           // todo: fix tiles return
-          final tiles = _saved.map(
+          final tiles = _saved.map<Widget>(
             (pair) {
               return ListTile(
                 title: Text(
