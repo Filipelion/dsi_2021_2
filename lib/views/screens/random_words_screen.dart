@@ -199,47 +199,24 @@ class _RandomWordsState extends State<RandomWords> {
             pair.asPascalCase,
             style: Constants.bigSizeFont,
           ),
-          trailing: Icon(
-            alreadySaved ? Icons.favorite : Icons.favorite_border,
-            color: alreadySaved ? Colors.red : null,
+          trailing: IconButton(
+            icon: Icon(
+              alreadySaved ? Icons.favorite : Icons.favorite_border,
+              color: alreadySaved ? Colors.red : null,
+            ),
+            onPressed: () {
+              setState(() {
+                if (alreadySaved) {
+                  _saved.remove(pair);
+                } else {
+                  _saved.add(pair);
+                }
+              });
+            },
           ),
-          onTap: () {
-            setState(() {
-              if (alreadySaved) {
-                _saved.remove(pair);
-              } else {
-                _saved.add(pair);
-              }
-            });
-          },
+          onTap: () {},
         ),
       );
-
-      // ListTile(
-      //   title: Text(
-      //     pair.asPascalCase,
-      //     style: Constants.bigSizeFont,
-      //   ),
-      //   trailing: IconButton(
-      //     icon: Icon(
-      //       alreadySaved ? Icons.favorite : Icons.favorite_border,
-      //       semanticLabel: alreadySaved ? 'Remove from saved' : 'Save',
-      //     ),
-      //     color: alreadySaved ? Colors.red : null,
-      //     onPressed: () {
-      //       setState(() {
-      //         if (alreadySaved) {
-      //           _saved.remove(pair);
-      //         } else {
-      //           _saved.add(pair);
-      //         }
-      //       });
-      //     },
-      //   ),
-      //   onTap: () {
-      //     // NEW lines from here...
-      //   },
-      // );
     }
   }
 }
