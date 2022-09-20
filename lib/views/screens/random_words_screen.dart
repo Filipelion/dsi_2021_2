@@ -53,6 +53,31 @@ class _RandomWordsState extends State<RandomWords> {
     );
   }
 
+  // Widget _deletePair(BuildContext context, WordPair pair, int index) {
+  //   final stringPair = pair.toString();
+
+  //   return Dismissible(
+  //     key: Key(stringPair),
+  //     direction: DismissDirection.endToStart,
+  //     onDismissed: (direction) {
+  //       setState(() {
+  //         var removed = _suggestions.removeAt(index);
+  //         _saved.remove(removed);
+  //       });
+  //     },
+  //     background: Container(
+  //       color: Colors.red,
+  //       child: const Align(
+  //         alignment: AlignmentDirectional.centerEnd,
+  //         child: Icon(
+  //           Icons.delete,
+  //         ),
+  //       ),
+  //     ),
+  //     child: _buildRow(context, stringPair, pair, index),
+  //   );
+  // }
+
   void _pushSaved() {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
@@ -116,6 +141,8 @@ class _RandomWordsState extends State<RandomWords> {
 
   Widget _buildRow(WordPair pair) {
     final alreadySaved = _saved.contains(pair);
+    final stringPair = pair.toString();
+    final index = _suggestions.indexOf(pair);
 
     if (_screenView.isCardView) {
       return Card(
@@ -149,18 +176,34 @@ class _RandomWordsState extends State<RandomWords> {
         ),
       );
     } else {
-      return ListTile(
-        title: Text(
-          pair.asPascalCase,
-          style: Constants.bigSizeFont,
-        ),
-        trailing: IconButton(
-          icon: Icon(
-            alreadySaved ? Icons.favorite : Icons.favorite_border,
-            semanticLabel: alreadySaved ? 'Remove from saved' : 'Save',
+      return Dismissible(
+        key: Key(stringPair),
+        direction: DismissDirection.endToStart,
+        onDismissed: (direction) {
+          setState(() {
+            var removed = _suggestions.removeAt(index);
+            _saved.remove(removed);
+          });
+        },
+        background: Container(
+          color: Colors.red,
+          child: const Align(
+            alignment: AlignmentDirectional.centerEnd,
+            child: Icon(
+              Icons.delete,
+            ),
           ),
-          color: alreadySaved ? Colors.red : null,
-          onPressed: () {
+        ),
+        child: ListTile(
+          title: Text(
+            pair.asPascalCase,
+            style: Constants.bigSizeFont,
+          ),
+          trailing: Icon(
+            alreadySaved ? Icons.favorite : Icons.favorite_border,
+            color: alreadySaved ? Colors.red : null,
+          ),
+          onTap: () {
             setState(() {
               if (alreadySaved) {
                 _saved.remove(pair);
@@ -170,10 +213,33 @@ class _RandomWordsState extends State<RandomWords> {
             });
           },
         ),
-        onTap: () {
-          // NEW lines from here...
-        },
       );
+
+      // ListTile(
+      //   title: Text(
+      //     pair.asPascalCase,
+      //     style: Constants.bigSizeFont,
+      //   ),
+      //   trailing: IconButton(
+      //     icon: Icon(
+      //       alreadySaved ? Icons.favorite : Icons.favorite_border,
+      //       semanticLabel: alreadySaved ? 'Remove from saved' : 'Save',
+      //     ),
+      //     color: alreadySaved ? Colors.red : null,
+      //     onPressed: () {
+      //       setState(() {
+      //         if (alreadySaved) {
+      //           _saved.remove(pair);
+      //         } else {
+      //           _saved.add(pair);
+      //         }
+      //       });
+      //     },
+      //   ),
+      //   onTap: () {
+      //     // NEW lines from here...
+      //   },
+      // );
     }
   }
 }
