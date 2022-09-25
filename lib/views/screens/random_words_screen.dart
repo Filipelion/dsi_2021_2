@@ -19,11 +19,11 @@ class _RandomWordsState extends State<RandomWords> {
   get _suggestions => _pairRepository.getSuggestions;
   get _saved => _pairRepository.getSaved;
 
-  void generatePair(index, suggestions) {
-    if (index >= suggestions.length) {
-      _suggestions.addAll(generateWordPairs().take(10));
-    }
-  }
+  // void generatePair(index, suggestions) {
+  //   if (index >= suggestions.length) {
+  //     _suggestions.addAll(generateWordPairs().take(10));
+  //   }
+  // }
 
   void _changeViwer() {
     setState(() {
@@ -52,31 +52,6 @@ class _RandomWordsState extends State<RandomWords> {
       body: _buildSuggestions(),
     );
   }
-
-  // Widget _deletePair(BuildContext context, WordPair pair, int index) {
-  //   final stringPair = pair.toString();
-
-  //   return Dismissible(
-  //     key: Key(stringPair),
-  //     direction: DismissDirection.endToStart,
-  //     onDismissed: (direction) {
-  //       setState(() {
-  //         var removed = _suggestions.removeAt(index);
-  //         _saved.remove(removed);
-  //       });
-  //     },
-  //     background: Container(
-  //       color: Colors.red,
-  //       child: const Align(
-  //         alignment: AlignmentDirectional.centerEnd,
-  //         child: Icon(
-  //           Icons.delete,
-  //         ),
-  //       ),
-  //     ),
-  //     child: _buildRow(context, stringPair, pair, index),
-  //   );
-  // }
 
   void _pushSaved() {
     Navigator.of(context).push(
@@ -120,20 +95,22 @@ class _RandomWordsState extends State<RandomWords> {
             crossAxisCount: 2,
             childAspectRatio: 1.3,
           ),
+          itemCount: 20,
           itemBuilder: (BuildContext context, int i) {
             final int index = i;
-            generatePair(index, _suggestions);
             return _buildRow(_suggestions[index]);
           });
     } else {
       return ListView.builder(
           padding: const EdgeInsets.all(16),
+          itemCount: 20,
           itemBuilder: (BuildContext context, int i) {
             if (i.isOdd) {
               return const Divider();
             }
             final int index = i ~/ 2;
-            generatePair(index, _suggestions);
+
+            // generatePair(index, _suggestions);
             return _buildRow(_suggestions[index]);
           });
     }

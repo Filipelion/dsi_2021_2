@@ -3,7 +3,10 @@ import 'package:english_words/english_words.dart';
 class PairRepository {
   final suggestions = <WordPair>[];
   final saved = <WordPair>{};
-  // bool savedPair = false;
+
+  PairRepository() {
+    suggestions.addAll(generateWordPairs().take(20));
+  }
 
   get getSuggestions => suggestions;
 
