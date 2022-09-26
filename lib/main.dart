@@ -1,3 +1,4 @@
+import 'package:dsi_2021_2/views/screens/saved_words_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:dsi_2021_2/views/screens/random_words_screen.dart';
 
@@ -19,6 +20,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const RandomWords(),
+        // '/savedWordsScreen': (context) => const SavedWords(divided: ,),
       },
     );
   }

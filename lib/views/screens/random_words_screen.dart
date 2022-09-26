@@ -1,3 +1,4 @@
+import 'package:dsi_2021_2/views/screens/saved_words_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 
@@ -18,12 +19,6 @@ class _RandomWordsState extends State<RandomWords> {
   final _screenView = CardViewRepository();
   get _suggestions => _pairRepository.getSuggestions;
   get _saved => _pairRepository.getSaved;
-
-  // void generatePair(index, suggestions) {
-  //   if (index >= suggestions.length) {
-  //     _suggestions.addAll(generateWordPairs().take(10));
-  //   }
-  // }
 
   void _changeViwer() {
     setState(() {
@@ -54,8 +49,10 @@ class _RandomWordsState extends State<RandomWords> {
   }
 
   void _pushSaved() {
+    // Navigator.pushNamed(context, '/savedWordsScreen', arguments: _saved);
     Navigator.of(context).push(
       MaterialPageRoute<void>(
+        settings: RouteSettings(name: '/savedWordsScreen'),
         builder: (context) {
           // todo: fix tiles return
           final tiles = _saved.map<Widget>(
@@ -76,12 +73,7 @@ class _RandomWordsState extends State<RandomWords> {
                 ).toList()
               : <Widget>[];
 
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('Saved Suggestions'),
-            ),
-            body: ListView(children: divided),
-          );
+          return SavedWords(divided: divided);
         },
       ),
     );
